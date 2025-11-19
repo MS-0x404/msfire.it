@@ -469,7 +469,7 @@ header .info-text .scroll:hover {
 
 
 /* =========================================
-   STILE CERTIFICAZIONI (Nuovo)
+     CERTIFICAZIONI
    ========================================= */
 .certifications-container {
     margin-top: 3rem;
@@ -611,18 +611,22 @@ header .info-text .scroll:hover {
 }
 
 /* Metadati (Data e Categoria) */
-.post-meta {
-    font-family: 'Courier New', monospace;
+.post-category {
+    /* Rimuovi position: absolute, top e right */
+    /* Lascia solo lo stile del testo */
+    font-weight: 600;
     font-size: 0.85rem;
-    color: #64748b; /* Grigio spento */
-    margin-bottom: 0.8rem;
-    display: flex;
-    gap: 1rem;
+    /* Aggiungi questo se vuoi che stia bene accanto alla data */
+    display: inline-block; 
 }
 
-.post-category {
-    color: #00abf0;
-    font-weight: 600;
+.post-meta {
+    display: flex;
+    gap: 1rem; /* Questo crea lo spazio tra la data e la categoria */
+    align-items: center;
+    color: #64748b;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 0.8rem;
 }
 
 /* Varianti colori categorie */
