@@ -1,229 +1,204 @@
 <!DOCTYPE html>
-
 <html lang="it">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>msfire - Cybersecurity 🛡️ | Red Team 🔥 | Zero Trust 🕵️‍♂️</title>
+  <title>msfire - Cybersecurity Portfolio & Blog</title>
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="style.css">
+  
+  <style>
+    .post-content { margin-top: 1.5rem; color: #cbd5e1; line-height: 1.8; font-size: 1rem; }
+    .post-content h3 { color: #fff; font-size: 1.3rem; margin: 2rem 0 1rem 0; border-left: 3px solid #00abf0; padding-left: 10px; }
+    .post-content p { margin-bottom: 1rem; }
+    .post-content pre { background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); padding: 1rem; border-radius: 6px; overflow-x: auto; margin: 1.5rem 0; font-family: 'Courier New', monospace; font-size: 0.9rem; }
+    .post-content code { color: #00abf0; }
+    .post-content blockquote { border-left: 2px solid #64748b; margin: 1.5rem 0; padding-left: 1.5rem; font-style: italic; color: #94a3b8; background: rgba(255, 255, 255, 0.02); padding: 10px; }
+    .classic-post { padding-bottom: 4rem; margin-bottom: 4rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); cursor: default; }
+    .classic-post:last-child { border-bottom: none; }
+  </style>
 </head>
 
 <body>
 
+    <div id="particles" style="position: fixed; width: 100%; height: 100%; z-index: -1;"></div>
 
-    <div class="nav">
-        <div class="nav-logo">
-            <a href="#" id="logo">MS</a>
-        </div>
-
-        <div class="hamburger" id="hamburger">
-            <i class='bx bx-menu' id="menu-icon"></i>
-          </div>
-
-        <ul class="nav-links" id="nav-links">
-            <li id="#features" class="link"><a href="#about">About Me</a></li>
-            <li id="#features" class="link"><a href="https://blog.msfire.it">Blog</a></li>
-            <li id="link4" class="link"><a href="game.html">Mini tools</a></li>
-        </ul>
-        <img src="./images/me.png" alt="">
-    </div>
-
-    <header>
-        <div id="particles"></div>
-        <div class="info-text">
-            <div class="matrix-container">
-                <h1 class="matrix-title" id="matrix-title"></h1>
+    <div class="split-layout">
+        
+        <aside class="profile-sidebar">
+            <div class="profile-pic-container">
+                <img src="./images/me.png" alt="Matteo Salis">
             </div>
-            <a href="#about" class="scroll"><i class='bx bxs-down-arrow'></i></a>
-        </div>
-    </header>
-
-
-<section id="about">
-    <div class="about-content">
-        <div class="about-text">
-            <h1>matteo</h1>
-            <p>
-                Hey, how are you? I'm Matteo, since I was a child I've had a passion for computers, I've always loved tinkering with PCs, smartphones, in short, everything that had to do with technology.
+            
+            <h1 class="sidebar-name">Matteo</h1>
+            <span class="sidebar-role">Red Team | Cybersecurity</span>
+            
+            <p class="sidebar-bio">
+                Hey, how are you? I'm Matteo, since I was a child I've had a passion for computers, I've always loved tinkering with PCs, smartphones, in short, everything that had to do with technology. 
             </p>
-            <div id="more-text" style="display: none;">
-                <p>
-                    I loved solving any kind of problem, whether it was fixing grandma's phone or more complicated things. If I didn't find a solution right away, I would stay there for hours, because that was the only priority at that moment.
-                </p>
-                <p>
-                    I don't let anyone get me down, at least not by a problem that might seem simple. And even today, if I find myself faced with a problem that I don't know how to solve, rest assured that I will never say "I don't know how to do it", but I will find a best solution, at all costs.
-                </p>
-            </div>
-            <a href="#" id="read-more-link" onclick="toggleAboutText(event)">Read more</a>
 
-            <div class="certifications-container">
-                <h3 class="cert-title">Certifications</h3>
-                <div class="cert-grid">
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link" style="background: rgba(0,171,240,0.1); color: #00abf0;">
+                    <i class='bx bx-home'></i> Feed / Blog
+                </a>
+                <a href="game.html" class="sidebar-link">
+                    <i class='bx bx-joystick'></i> Mini Tools
+                </a>
+                <a href="mailto:matteosalis04@ik.me" class="sidebar-link">
+                    <i class='bx bx-envelope'></i> Contattami
+                </a>
+            </nav>
+
+            <div class="certifications-container" style="margin-top: 0; text-align: left;">
+                <h3 class="cert-title" style="font-size: 1rem;">Certifications</h3>
+                <div class="cert-grid" style="justify-content: center;">
                     
-                    <div class="cert-card" onclick="window.open('https://certs.ine.com/47680090-c69b-4c21-bb04-ef8089af3dcb#acc.EAS0Jiw4', '_blank')">
-                        <div class="cert-icon">
+                    <div class="cert-card" onclick="window.open('https://certs.ine.com/47680090-c69b-4c21-bb04-ef8089af3dcb#acc.EAS0Jiw4', '_blank')" style="width: 100%; padding: 8px;">
+                        <div class="cert-icon" style="width: 35px; height: 35px;">
                             <img src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/165711963" alt="Badge eJPT">
                         </div>
                         <div class="cert-info">
-                            <h4>eJPT</h4>
-                            <span>Junior Penetration Tester</span>
+                            <h4 style="font-size: 0.9rem;">eJPT</h4>
+                            <span style="font-size: 0.7rem;">Junior PenTester</span>
                         </div>
                     </div>
 
-                    <div class="cert-card locked">
-                        <div class="cert-icon">
+                    <div class="cert-card locked" style="width: 100%; padding: 8px;">
+                        <div class="cert-icon" style="width: 35px; height: 35px;">
                             <i class='bx bxs-lock-alt'></i>
                         </div>
                         <div class="cert-info">
-                            <h4>Loading...</h4>
-                            <span>Coming Soon</span>
+                            <h4 style="font-size: 0.9rem;">Loading...</h4>
+                            <span style="font-size: 0.7rem;">Coming Soon</span>
                         </div>
                     </div>
 
                 </div>
             </div>
-        </div>
-        <div class="about-logo">
-            <div class="circle-container">
-                <div class="logo-content">
-                    <img src="./images/me.png" alt="">
+
+            <div class="sidebar-social">
+                <a href="https://www.github.com/MS-0x404" class="social-btn"><i class='bx bxl-github'></i></a>
+                <a href="https://www.x.com/ms_0x404" class="social-btn"><i class='bx bxl-twitter'></i></a>
+            </div>
+        </aside>
+
+
+        <main class="main-content">
+            
+            <div class="feed-header">
+                <h2>/var/log/<span>syslog</span></h2>
+            </div>
+
+<article class="classic-post">
+                <div class="post-meta">
+                    <span class="post-date">19-11-2025</span>
+                    <span class="post-category">[ WRITE-UP ]</span>
                 </div>
-            </div>
-        </div>
+                <h2 class="post-title">My first Capture The Flag: Intigriti Challenge 1125</h2>
+                
+                <div class="post-content">
+                    <p>
+                        Hello everyone, this won't be a "normal" write-up, full of complicated technical terms. 
+                        Instead, I'd like to talk about my experience (even if little) and how I managed to find my first bug in an Intigriti CTF. 
+                        I'm writing this especially for those who, like me, struggle to find a bug and want to understand how, and where to look.
+                    </p>
 
-    </div>
-    </div>
-</section>
+                    <h3>Methodology:</h3>
+                    <p>
+                        As soon as I arrived on the site and logged in with a fake user, I noticed a <strong>POST</strong> request to the server 
+                        (the request the site makes when you perform an action) and saw a cookie that looked exactly like a <strong>JWT (JSON Web Token)</strong>.
+                    </p>
 
-    
+                    <blockquote>
+                        <strong>For those who don't know what a JWT is (and how we tricked it):</strong><br>
+                        In simple terms, it's like a VIP pass that the site gives you to remember who you are. Normally, it has a secret signature at the end so you can't modify it yourself with a marker. 
+                        But here, the server was definitely stupid: we gave it a modified pass saying "Look, this one doesn't need a signature" (alg: none), and like a fool, it believed us and threw open the Admin doors.
+                    </blockquote>
 
-    
+                    
+                    <pre><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJ1c2VybmFtZSI6InZpY3RpbSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNzYzNTQ1MzI0fQ.OS2PPoI-rj5DFSe4yJTzgUmkSXbZANAynGI20uRHcV4</code></pre>
+
+                    <p>Decoding it, it looked like this:</p>
+
+<pre><code>{
+"alg": "HS256",
+"typ": "JWT"
+}
+{
+"user_id": 6,
+"username": "victim",
+"role": "user",
+"exp": 1763545324
+}</code></pre>
+
+                    <p>
+                        So very simply I thought: "What if the server accepted the <code>none</code> algorithm?". 
+                        Well, trying doesn't hurt, so I modified it: initially, I put <code>admin</code> as the role and changed the algorithm to <code>none</code>... and it worked! 
+                        I effectively became admin.
+                    </p>
+                    <p>
+                        Once I became admin I thought: "Game over! I'm in! I just have to find the flag!".
+                        Well, those were my famous last words before the disaster... It's not exactly that simple. 
+                        So I rolled up my sleeves and kept looking until I thought: "What if I put <code>admin</code> as username and <code>1</code> as user_id?".
+                        I did that and got into the real administrator account. I could do many things, including entering the admin profile, where I noticed a quite strange field in the request:
+                    </p>
+
+<pre><code>POST /admin/profile HTTP/1.1
+Host: challenge-1125.intigriti.io
+[...]
+Cookie: token=eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYzNTQ1MzI0fQ.
+
+display_name=ss</code></pre>
+
+                    <p>
+                        After a few failed attempts and tests, I managed to find the <strong>RCE</strong> (Remote Code Execution) that allowed sending commands to the operating system, and it is precisely through this that I found the flag which allowed me to complete the CTF.
+                    </p>
+                    <p>
+                        But now you are surely asking yourselves "how?". It's very simple in the end: I tried to see what would happen if I wrote <code>{{7*7}}</code> and the site answered <strong>49</strong>. 
+                        So I can say I found an <strong>SSTI (Server-Side Template Injection)</strong> vulnerability inside this field.
+                    </p>
+
+                    <blockquote>
+                        <strong>For those who don't know what an SSTI is:</strong><br>
+                        In simple terms, it happens when a website takes what you write and brutally inserts it into the page code (the template) without checking. 
+                        It's as if in a form you wrote a math operation and the person reading the form, instead of reading the numbers, did the calculation. 
+                        Only here, instead of calculations, you can make it execute server commands!
+                    </blockquote>
+
+                    <p>
+                        Without further ado, I found a payload that imported <code>os</code> in Python and used it:
+                    </p>
+
+<pre><code>POST /admin/profile HTTP/1.1
+Host: challenge-1125.intigriti.io
+[...]
+Cookie: token=eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYzNTQ1MzI0fQ.
 
 
+display_name={{ self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}</code></pre>
 
-
-
-
-
-
-
-    <section id="services">
-
-            <div class="heading">
-
-                <h1>My Services</h1>
-
-            </div>
-
-            <div class="feature-cards">
-
-            <div class="card">
-
-                <div class="info">
-
-                    <i class='bx bx-shield'></i>
-
-                    <h1>Penetration Testing</h1>
-
-                    <p>Detailed Report for your infrastructure</p>
-
+                    <p>
+                        Sending this POST, the output of the <code>id</code> command appeared inside that field, showing the user I was logged in as inside the operating system. 
+                        Now only the flag is missing, which I leave for you to find for fun.
+                    </p>
+                    <p>
+                        I write this write-up to be helpful and inspiring to those who, like me, are having trouble finding their first bug.
+                    </p>
+                    
+                    <p style="margin-top: 2rem; font-style: italic;">Happy Hacking! 🚩</p>
                 </div>
-
-            </div>
-
-            <div class="card">
-
-                <div class="info">
-
-                    <i class='bx bx-code-alt'></i>
-
-                    <h1>Secure Code</h1>
-
-                    <p>Secure Code with focus on IT Security</p>
-
-
-                </div>
-
-            </div>
-
-            <div class="card">
-
-                <div class="info">
-
-                    <i class='bx bx-brain'></i>
-
-                    <h1>IT Support & Consulting</h1>
-
-                    <p>IT Support for better the posture of security</p>
-
-
-
-                </div>
-
-            </div>
-
-    </section>
-
-
-
-
-
-
-
-    <footer>
-
-        <div id="contact" class="footer-content">
-
-            <div class="footer-logo">MS - Portfolio</div>
+            </article>
 
             
 
-            
 
-            <div class="footer-social">
 
-                <a id="mail-send"><i class='bx bx-mail-send' ></i></a>
-                <a href="https://www.github.com/MS-0x404"><i class='bx bxl-github'></i></a>
-                <a href="https://www.x.com/ms_0x404"><i class='bx bxl-twitter'></i></a>
-            </div>
-
-            
-
-            <div class="footer-bottom">
-
-                <p>Copyright © 2025 msfire . All Rights Reserved.</p>
-
-            </div>
-
-        </div>
-
-    </footer>
-
-    <div id="email-box" class="email-box">
-        <p>Contact me: 
-            <strong id="email-text">matteosalis04@ik.me</strong> 
-            <i class='bx bx-copy' id="copy-icon"></i>
-        </p>
-        <span id="copy-confirm">Copied!</span>
-        <p>PGP: 
-            <strong id="pgp-text">0xDC923909E7DF5D5A</strong> 
-  
-         </p>
+        </main>
     </div>
-    
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-
     <script src="script.js"></script>
-    <script src="matrix.js"></script>
-
-
-
-    
-
 </body>
-
 </html>
