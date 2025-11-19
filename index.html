@@ -117,6 +117,12 @@
                         But here, the server was definitely stupid: we gave it a modified pass saying "Look, this one doesn't need a signature" (alg: none), and like a fool, it believed us and threw open the Admin doors.
                     </blockquote>
 
+                    <div style="background: rgba(255, 193, 7, 0.1); border-left: 3px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 0 5px 5px 0;">
+                        <strong>⚠️ Crucial Tip:</strong><br>
+                        When you remove the signature part, <strong>do not delete the final dot (<code>.</code>)</strong> at the end of the token! 
+                        The structure must always remain <code>header.payload.</code> (with the trailing dot). If you delete it, the format becomes invalid and the server will reject it. It's a small detail that drives many people crazy!
+                    </div>
+
                     
                     <pre><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJ1c2VybmFtZSI6InZpY3RpbSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNzYzNTQ1MzI0fQ.OS2PPoI-rj5DFSe4yJTzgUmkSXbZANAynGI20uRHcV4</code></pre>
 
