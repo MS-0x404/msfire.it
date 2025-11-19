@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>msfire - Cybersecurity Portfolio & Blog</title>
+  <title>msfire - Cybersecurity | Red Team | Blog</title>
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="style.css">
   
@@ -88,7 +88,7 @@
         <main class="main-content">
             
             <div class="feed-header">
-                <h2>/var/log/<span>syslog</span></h2>
+                <h2>/var/log/<span>posts</span></h2>
             </div>
 
 <article class="classic-post">
@@ -114,7 +114,7 @@
                     <blockquote>
                         <strong>For those who don't know what a JWT is (and how we tricked it):</strong><br>
                         In simple terms, it's like a VIP pass that the site gives you to remember who you are. Normally, it has a secret signature at the end so you can't modify it yourself with a marker. 
-                        But here, the server was definitely stupid: we gave it a modified pass saying "Look, this one doesn't need a signature" (alg: none), and like a fool, it believed us and threw open the Admin doors.
+                        But here, The server was overly trusting: we gave it a modified pass saying "Look, this one doesn't need a signature" (alg: none), and blindly, it believed us and threw open the Admin doors.
                     </blockquote>
 
                     <div style="background: rgba(255, 193, 7, 0.1); border-left: 3px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 0 5px 5px 0;">
@@ -194,6 +194,98 @@ display_name={{ self.__init__.__globals__.__builtins__.__import__('os').popen('i
                     </p>
                     
                     <p style="margin-top: 2rem; font-style: italic;">Happy Hacking! 🚩</p>
+                </div>
+            </article>
+
+
+            <article class="classic-post">
+                <div class="post-meta">
+                    <span class="post-date">19-11-2025</span>
+                    <span class="post-category text-success">[ DEV / SECURITY ]</span>
+                </div>
+                <h2 class="post-title">Automating the Hunt: My Linux PrivEsc Checker</h2>
+                
+                <div class="post-content">
+                    <p>
+                        During labs and pentest sessions, I realized how much time I waste typing the same basic enumeration commands once I get a shell.
+                        Of course, there are incredibly powerful and complete industry-standard tools (like LinPEAS) that are essential for our work. However, there is a big difference between running an automated tool and building one from scratch.
+                    </p>
+                    <p>
+                        I decided to create a **Bash** script that focuses precisely on four critical vectors: **SUID**, **Capabilities**, **NFS**, and **Cron Jobs**. Here is how I built it and the logic behind each check.
+                    </p>
+
+                    <div style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+                        <img src="./images/privesc.png" alt="Script Demo Output" style="opacity: 0.9;"> 
+                        <p style="font-size: 0.8rem; text-align: center; padding: 10px; color: #64748b; background: rgba(0,0,0,0.3);">
+                            <em>Output</em>
+                        </p>
+                    </div>
+
+                    <h3>1. SUID: The Regex Optimization</h3>
+                    <p>
+                        The **Set User ID (SUID)** bit is a standard Unix feature that allows a file to run with its owner's permissions. The danger arises when binaries that allow command execution (like `find`, `vim`, or `cp`) have this bit enabled.
+                    </p>
+                    <p>
+                        The classic approach to find them is using `find / -perm -4000`. However, this returns many legitimate results that create "noise". For my script, I implemented a **dynamic Allowlist** system.
+                    </p>
+
+<pre><code># Array of binaries known to allow Privilege Escalation (GTFOBins)
+readonly -a binari_sospetti=(
+    "nmap" "vim" "find" "bash" "base64" ... 
+)
+
+suid() {
+    # Dynamic construction of an optimized Regex: (nmap|vim|find|...)
+    local regex_pattern=$(printf "%s|" "${binari_sospetti[@]}")
+    regex_pattern="(${regex_pattern%|})$" 
+
+    # Search only for SUID files that match our target list
+    find / -type f -perm -4000 2>/dev/null | grep -E "$regex_pattern"
+}</code></pre>
+                    <p>
+                        This technique drastically reduces execution time and output, showing me only the binaries I can actually exploit to escalate privileges.
+                    </p>
+
+                    <h3>2. Capabilities: Root split into pieces</h3>
+                    <p>
+                        **Linux Capabilities** break down root privileges into distinct units. A binary might not be SUID, but it could have `cap_setuid`, which still allows it to impersonate other users.
+                    </p>
+                    <p>
+                        The script uses `getcap -r /` to scan the filesystem. The engineering challenge here is filtering false positives: many system services use legitimate capabilities. I had to create an **Ignore List** to exclude standard processes, highlighting critical capabilities like `cap_dac_read_search` (bypassing read permissions) instead.
+                    </p>
+
+                    <h3>3. Weaponizing Cron Jobs</h3>
+                    <p>
+                        Scheduled tasks (Cron) are a classic vector. If root runs a script every 5 minutes, and I can modify that script, then I can execute code as root.
+                    </p>
+                    <p>
+                        The complexity lies in parsing the `/etc/crontab` file. Bash is not designed for advanced parsing, so I had to write logic that:
+                    </p>
+                    <ol>
+                        <li>Reads the crontab ignoring comments.</li>
+                        <li>Extracts absolute paths from commands (e.g., `/usr/local/bin/backup.sh`).</li>
+                        <li>Checks if the current user has write permissions (`-w`) on those files.</li>
+                    </ol>
+
+<pre><code># Permission check logic (Simplified)
+echo "$paths" | while IFS= read -r path; do
+    if [ -w "$path" ]; then
+        echo "[!] VULNERABLE: $USER can modify $path (executed by root)"
+    fi
+done</code></pre>
+
+                    <h3>Conclusion</h3>
+                    <p>
+                        Creating this tool allowed me to speed up my workflow, but most importantly, to master the internal Linux mechanisms that we often take for granted.
+                        There is nothing better than getting a root shell thanks to a tool you wrote yourself.
+                    </p>
+                    
+                    <p style="margin-top: 2rem; border-left: 3px solid #00abf0; padding-left: 15px;">
+                        <strong>Source Code:</strong><br>
+                        <a href="https://github.com/MS-0x404/Linux-PrivEsc-Checker" target="_blank" style="color: #00abf0; text-decoration: underline; font-weight: 600;">
+                             github.com/MS-0x404/Linux-PrivEsc-Checker <i class='bx bx-link-external'></i>
+                        </a>
+                    </p>
                 </div>
             </article>
 
