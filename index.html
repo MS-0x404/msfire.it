@@ -253,7 +253,7 @@ scan_sha256=$(openssl dgst -sha256 "$file" 2>/dev/null | awk '{print $2}')
 
                     <h3>4. Automation and Structured Reporting</h3>
                     <p>
-                        An Antivirus cannot be static. I created dedicated update scripts (`update.sh`) that verify HTTP status codes before downloading new signatures from Abuse.ch, ensuring database integrity. The installer automatically configures **Cron Jobs** to make these operations transparent to the user.
+                        An Antivirus must run in the background. Instead of relying on external scripts, I wrote a function that allows MS-AV to "install itself" into the <code>crontab</code>. The <code>auto</code> function generates a dedicated worker script (`av-auto`) that handles daily updates via <code>freshclam</code> and `curl`, and performs scheduled scans without user intervention.
                     </p>
                     <p>
                          Also, I wanted to make the output professional. Manually building valid JSON in Bash is tedious, but necessary to integrate logs into external SIEM systems.
