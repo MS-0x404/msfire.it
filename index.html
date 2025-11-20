@@ -185,6 +185,99 @@ done</code></pre>
                 </div>
             </article>
 
+            <article class="classic-post">
+                <div class="post-meta">
+                    <span class="post-date">20-06-2025</span>
+                    <span class="post-category text-warning">[ DEV / SECURITY ]</span>
+                </div>
+                <h2 class="post-title">MS-AV: Writing a Linux Antivirus from Scratch</h2>
+                
+                <div class="post-content">
+                    <p>
+                        They often say that to know how to attack, you must know how to defend. So, before diving into advanced Red Teaming, I set myself a seemingly crazy challenge as my final project for **Istituto InfoBasic**: writing a fully functional Antivirus entirely in Bash.
+                    </p>
+                    <p>
+                        The result is <strong>MS-AV</strong>. It is not just a simple wrapper for existing tools, but a scanning engine that I had to optimize heavily. Writing an AV in a scripting language brings a huge problem: performance.
+                    </p>
+
+                     <div style="margin-bottom: 2rem; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); background: #000;">
+                        <video controls style="width: 100%; display: block;">
+                            <source src="./videos/demoprg.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+
+                    <h3>1. The "Engine": Optimization is Everything</h3>
+                    <p>
+                        Bash was not born for intensive calculations. If you try to calculate the hash of 100,000 files in a poorly written `for` loop, the CPU explodes due to process overhead.
+                        I had to optimize the scanning loop by minimizing system calls (syscalls). Instead of using useless `cat` or pipes, I pass the file directly to <code>openssl</code> and clean the output with <code>awk</code> in a single stream.
+                    </p>
+                    <p>
+                        Furthermore, I implemented a **smart exclusion** system directly in the `find` command. The script automatically ignores virtual directories like `/proc`, `/sys`, or `/dev` to avoid infinite loops or critical false positives.
+                    </p>
+
+                    <h3>2. MD5 vs SHA256: The Collision Problem</h3>
+                    <p>
+                        Most amateur scripts stop at MD5 because it is fast. However, cryptographically speaking, **MD5 is broken**. It is vulnerable to collision attacks, which would allow sophisticated malware to disguise itself.
+                        For this reason, MS-AV implements a real-time **Dual-Hashing** engine:
+                    </p>
+
+<pre><code># Extract from the core scanning loop
+# MD5 for speed (legacy ClamAV compatibility)
+scan_md5=$(openssl dgst -md5 "$file" 2>/dev/null | awk '{print $2}') 
+# SHA256 for security (Abuse.ch integration)
+scan_sha256=$(openssl dgst -sha256 "$file" 2>/dev/null | awk '{print $2}')
+
+# ...comparison logic with in-memory databases follows...</code></pre>
+
+                    <h3>3. "Poor Man's" Heuristics & Secure Deletion</h3>
+                    <p>
+                        Signatures are useless against 0-day threats. I wrote a heuristic function based on Regex that intercepts "noisy" patterns in filenames (e.g., <em>payload, rat, keygen</em>) that escape the hash check.
+                    </p>
+                    <p>
+                        But the most important detail is **secure deletion**. When a file is confirmed infected and moved to quarantine, if the user decides to delete it, I don't use a simple `rm`. I use <code>shred</code> to overwrite the physical blocks on the disk, preventing the malware from being recovered via forensic data recovery tools.
+                    </p>
+<pre><code>function clean_malware() {
+    if [[ $(ls -A $DIRECTORY_QUARANTENA) ]]; then ## If files are in quarantine, delete them 
+        shred -u $DIRECTORY_QUARANTENA/*
+        echo ""
+        echo "=== Threats Removed ==="
+        echo ""
+    else
+        echo ""
+        echo "=== No Malware Found! ==="
+        echo ""
+    fi
+}
+</code></pre>
+
+                    <h3>4. Automation and Structured Reporting</h3>
+                    <p>
+                        An Antivirus cannot be static. I created dedicated update scripts (`update.sh`) that verify HTTP status codes before downloading new signatures from Abuse.ch, ensuring database integrity. The installer automatically configures **Cron Jobs** to make these operations transparent to the user.
+                    </p>
+                    <p>
+                         Also, I wanted to make the output professional. Manually building valid JSON in Bash is tedious, but necessary to integrate logs into external SIEM systems.
+                    </p>
+<pre><code># Manual JSON log construction in Bash
+log_json="{\"timestamp\": \"$timestamp\", \"scan_id\": \"$scan_id\", \
+\"hostname\": \"$HOSTNAME\", \"scan_path\": \"$DIRECTORY_DA_SCANSIONARE\", \
+\"esclusioni\": \"$ESCLUSIONI_ESTENSIONI\", \
+\"malware_trovati\": $malware_count, \"file_scansionati\": $count, \
+\"scan_status\": \"$scan_status\"}"
+
+echo "$log_json" >> "$LOG_JSON_FILE"</code></pre>
+
+
+
+                    <p style="margin-top: 2rem; border-left: 3px solid #f59e0b; padding-left: 15px;">
+                        <strong>Source Code:</strong><br>
+                        <a href="https://github.com/MS-0x404/ms-av" target="_blank" style="color: #f59e0b; text-decoration: underline; font-weight: 600;">
+                             github.com/MS-0x404/ms-av <i class='bx bx-link-external'></i>
+                        </a>
+                    </p>
+                </div>
+            </article>
+
             
 
 
