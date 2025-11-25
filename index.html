@@ -93,6 +93,96 @@
                 <h2>/var/log/<span>posts</span></h2>
             </div>
 
+            <article class="classic-post">
+                <div class="post-meta">
+                    <span class="post-date">19-11-2025</span>
+                    <span class="post-category">[ WRITE-UP ]</span>
+                </div>
+                <h2 class="post-title">My first Capture The Flag: Intigriti Challenge 1125</h2>
+                <div class="post-content">
+                    <p>
+                        Hello everyone, this won't be a "normal" write-up, full of complicated technical terms. 
+                        Instead, I'd like to talk about my experience (even if little) and how I managed to find my first bug in an Intigriti CTF. 
+                        I'm writing this especially for those who, like me, struggle to find a bug and want to understand how, and where to look.
+                    </p>
+                    <h3>Methodology:</h3>
+                    <p>
+                        As soon as I arrived on the site and logged in with a fake user, I noticed a <strong>POST</strong> request to the server 
+                        (the request the site makes when you perform an action) and saw a cookie that looked exactly like a <strong>JWT (JSON Web Token)</strong>.
+                    </p>
+                    <blockquote>
+                        <strong>For those who don't know what a JWT is (and how we tricked it):</strong><br>
+                        In simple terms, it's like a VIP pass that the site gives you to remember who you are. Normally, it has a secret signature at the end so you can't modify it yourself with a marker. 
+                        But here, The server was overly trusting: we gave it a modified pass saying "Look, this one doesn't need a signature" (alg: none), and blindly, it believed us and threw open the Admin doors.
+                    </blockquote>
+                    <div style="background: rgba(255, 193, 7, 0.1); border-left: 3px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 0 5px 5px 0;">
+                        <strong>⚠️ Crucial Tip:</strong><br>
+                        When you remove the signature part, <strong>do not delete the final dot (<code>.</code>)</strong> at the end of the token! 
+                        The structure must always remain <code>header.payload.</code> (with the trailing dot). If you delete it, the format becomes invalid and the server will reject it. It's a small detail that drives many people crazy!
+                    </div>
+                    <pre><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJ1c2VybmFtZSI6InZpY3RpbSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNzYzNTQ1MzI0fQ.OS2PPoI-rj5DFSe4yJTzgUmkSXbZANAynGI20uRHcV4</code></pre>
+                    <p>Decoding it, it looked like this:</p>
+<pre><code>{
+"alg": "HS256",
+"typ": "JWT"
+}
+{
+"user_id": 6,
+"username": "victim",
+"role": "user",
+"exp": 1763545324
+}</code></pre>
+                    <p>
+                        So very simply I thought: "What if the server accepted the <code>none</code> algorithm?". 
+                        Well, trying doesn't hurt, so I modified it: initially, I put <code>admin</code> as the role and changed the algorithm to <code>none</code>... and it worked! 
+                        I effectively became admin.
+                    </p>
+                    <p>
+                        Once I became admin I thought: "Game over! I'm in! I just have to find the flag!".
+                        Well, those were my famous last words before the disaster... It's not exactly that simple. 
+                        So I rolled up my sleeves and kept looking until I thought: "What if I put <code>admin</code> as username and <code>1</code> as user_id?".
+                        I did that and got into the real administrator account. I could do many things, including entering the admin profile, where I noticed a quite strange field in the request:
+                    </p>
+<pre><code>POST /admin/profile HTTP/1.1
+Host: challenge-1125.intigriti.io
+[...]
+Cookie: token=eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYzNTQ1MzI0fQ.
+display_name=ss</code></pre>
+                    <p>
+                        After a few failed attempts and tests, I managed to find the <strong>RCE</strong> (Remote Code Execution) that allowed sending commands to the operating system, and it is precisely through this that I found the flag which allowed me to complete the CTF.
+                    </p>
+                    <p>
+                        But now you are surely asking yourselves "how?". It's very simple in the end: I tried to see what would happen if I wrote <code>{{7*7}}</code> and the site answered <strong>49</strong>. 
+                        So I can say I found an <strong>SSTI (Server-Side Template Injection)</strong> vulnerability inside this field.
+                    </p>
+                    <blockquote>
+                        <strong>For those who don't know what an SSTI is:</strong><br>
+                        In simple terms, it happens when a website takes what you write and brutally inserts it into the page code (the template) without checking. 
+                        It's as if in a form you wrote a math operation and the person reading the form, instead of reading the numbers, did the calculation. 
+                        Only here, instead of calculations, you can make it execute server commands!
+                    </blockquote>
+                    <p>
+                        Without further ado, I found a payload that imported <code>os</code> in Python and used it:
+                    </p>
+<pre><code>POST /admin/profile HTTP/1.1
+Host: challenge-1125.intigriti.io
+[...]
+Cookie: token=eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYzNTQ1MzI0fQ.
+display_name={{ self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}</code></pre>
+                    <p>
+                        Sending this POST, the output of the <code>id</code> command appeared inside that field, showing the user I was logged in as inside the operating system. 
+                        Now only the flag is missing, which I leave for you to find for fun.
+                    </p>
+                    <p>
+                        I write this write-up to be helpful and inspiring to those who, like me, are having trouble finding their first bug.
+                    </p>
+                    <a href="https://msfire.medium.com/intigriti-challenge-1125-from-jwt-bypass-to-rce-12366a11e530" target="_blank" style="color: #fff; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: color 0.3s;">
+                        <i class='bx bxl-medium' style="font-size: 1.4rem;"></i> Read the full Write-up on Medium <i class='bx bx-right-arrow-alt'></i>
+                    </a>
+                    <p style="margin-top: 2rem; font-style: italic;">Happy Hacking! 🚩</p>
+                </div>
+            </article>
+
 
             <article class="classic-post">
                 <div class="post-meta">
