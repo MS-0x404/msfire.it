@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>msfire - Cybersecurity | Red Team | Blog</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    .post-content { margin-top: 1.5rem; color: #cbd5e1; line-height: 1.8; font-size: 1rem; }
+    .post-content h3 { color: #fff; font-size: 1.3rem; margin: 2rem 0 1rem 0; border-left: 3px solid #00abf0; padding-left: 10px; }
+    .post-content p { margin-bottom: 1rem; }
+    .post-content pre { background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); padding: 1rem; border-radius: 6px; overflow-x: auto; margin: 1.5rem 0; font-family: 'Courier New', monospace; font-size: 0.9rem; }
+    .post-content code { color: #00abf0; }
+    .post-content blockquote { border-left: 2px solid #64748b; margin: 1.5rem 0; padding-left: 1.5rem; font-style: italic; color: #94a3b8; background: rgba(255, 255, 255, 0.02); padding: 10px; }
+    .classic-post { padding-bottom: 4rem; margin-bottom: 4rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); cursor: default; }
+    .classic-post:last-child { border-bottom: none; }
+  </style>
+</head>
+
+<body>
+
+    <div id="particles" style="position: fixed; width: 100%; height: 100%; z-index: -1;"></div>
+
+    <div class="split-layout">
+        
+        <aside class="profile-sidebar">
+            <div class="profile-pic-container">
+                <img src="./images/me.png" alt="Matteo Salis">
+            </div>
+            
+            <h1 class="sidebar-name">Matteo</h1>
+            <span class="sidebar-role">Red Team | CTF Player | Python</span>
+            
+            <p class="sidebar-bio">
+                 Junior Penetration Tester & Red Team player. Focused on Web Application Security, Network Pentesting, and automating attack vectors with Python & Bash. Always digging deeper to find the root cause.
+            </p>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link" style="background: rgba(0,171,240,0.1); color: #00abf0;">
+                    <i class='bx bx-home'></i> Feed / Blog
+                </a>
+                <a href="game.html" class="sidebar-link">
+                    <i class='bx bx-joystick'></i> Mini Tools
+                </a>
+                <a href="mailto:matteosalis04@ik.me" class="sidebar-link">
+                    <i class='bx bx-envelope'></i> Contattami
+                </a>
+            </nav>
+
+            <div class="certifications-container" style="margin-top: 0; text-align: left;">
+                <h3 class="cert-title" style="font-size: 1rem;">Certifications</h3>
+                <div class="cert-grid" style="justify-content: center;">
+                    
+                    <div class="cert-card" onclick="window.open('https://certs.ine.com/47680090-c69b-4c21-bb04-ef8089af3dcb#acc.EAS0Jiw4', '_blank')" style="width: 100%; padding: 8px;">
+                        <div class="cert-icon" style="width: 35px; height: 35px;">
+                            <img src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/165711963" alt="Badge eJPT">
+                        </div>
+                        <div class="cert-info">
+                            <h4 style="font-size: 0.9rem;">eJPT</h4>
+                            <span style="font-size: 0.7rem;">Junior PenTester</span>
+                        </div>
+                    </div>
+                    <div class="cert-card" onclick="window.open('https://certs.ine.com/b9ce4b83-8109-4351-9f70-c7ce06f44527#acc.BaNFQwmK', '_blank')" style="width: 100%; padding: 8px;">
+                        <div class="cert-icon" style="width: 35px; height: 35px;">
+                            <img src="https://api.accredible.com/v1/credential/generate_baked_badge?credential_id=168183064" alt="Badge eWPT">
+                        </div>
+                        <div class="cert-info">
+                            <h4 style="font-size: 0.9rem;">eWPT</h4>
+                            <span style="font-size: 0.7rem;">Junior Web PenTester</span>
+                        </div>
+                    </div>
+
+                    <div class="cert-card locked" style="width: 100%; padding: 8px;">
+                        <div class="cert-icon" style="width: 35px; height: 35px;">
+                            <i class='bx bxs-lock-alt'></i>
+                        </div>
+                        <div class="cert-info">
+                            <h4 style="font-size: 0.9rem;">Loading...</h4>
+                            <span style="font-size: 0.7rem;">Coming Soon</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="sidebar-social">
+                <a href="https://www.github.com/MS-0x404" class="social-btn"><i class='bx bxl-github'></i></a>
+                <a href="https://www.x.com/ms_0x404" class="social-btn"><i class='bx bxl-twitter'></i></a>
+                <a href="https://www.linkedin.com/in/matteo-salis-495145364" class="social-btn"><i class='bx bxl-linkedin'></i></a>
+
+            </div>
+        </aside>
+
+
+        <main class="main-content">
+            
+            <div class="feed-header">
+                <h2>/var/log/<span>posts</span></h2>
+            </div>
+
+            <article class="classic-post">
+                <div class="post-meta">
+                    <span class="post-date">25-11-2025</span>
+                    <span class="post-category">[ WRITE-UP ]</span>
+                </div>
+                <h2 class="post-title">My first Capture The Flag: Intigriti Challenge 1125</h2>
+                <div class="post-content">
+                    <p>
+                        Hello everyone, this won't be a "normal" write-up, full of complicated technical terms. 
+                        Instead, I'd like to talk about my experience (even if little) and how I managed to find my first bug in an Intigriti CTF. 
+                        I'm writing this especially for those who, like me, struggle to find a bug and want to understand how, and where to look.
+                    </p>
+                    <h3>Methodology:</h3>
+                    <p>
+                        As soon as I arrived on the site and logged in with a fake user, I noticed a <strong>POST</strong> request to the server 
+                        (the request the site makes when you perform an action) and saw a cookie that looked exactly like a <strong>JWT (JSON Web Token)</strong>.
+                    </p>
+                    <blockquote>
+                        <strong>For those who don't know what a JWT is (and how we tricked it):</strong><br>
+                        In simple terms, it's like a VIP pass that the site gives you to remember who you are. Normally, it has a secret signature at the end so you can't modify it yourself with a marker. 
+                        But here, The server was overly trusting: we gave it a modified pass saying "Look, this one doesn't need a signature" (alg: none), and blindly, it believed us and threw open the Admin doors.
+                    </blockquote>
+                    <div style="background: rgba(255, 193, 7, 0.1); border-left: 3px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 0 5px 5px 0;">
+                        <strong>⚠️ Crucial Tip:</strong><br>
+                        When you remove the signature part, <strong>do not delete the final dot (<code>.</code>)</strong> at the end of the token! 
+                        The structure must always remain <code>header.payload.</code> (with the trailing dot). If you delete it, the format becomes invalid and the server will reject it. It's a small detail that drives many people crazy!
+                    </div>
+                    <pre><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJ1c2VybmFtZSI6InZpY3RpbSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNzYzNTQ1MzI0fQ.OS2PPoI-rj5DFSe4yJTzgUmkSXbZANAynGI20uRHcV4</code></pre>
+                    <p>Decoding it, it looked like this:</p>
+<pre><code>{
+"alg": "HS256",
+"typ": "JWT"
+}
+{
+"user_id": 6,
+"username": "victim",
+"role": "user",
+"exp": 1763545324
+}</code></pre>
+                    <p>
+                        So very simply I thought: "What if the server accepted the <code>none</code> algorithm?". 
+                        Well, trying doesn't hurt, so I modified it: initially, I put <code>admin</code> as the role and changed the algorithm to <code>none</code>... and it worked! 
+                        I effectively became admin.
+                    </p>
+                    <p>
+                        Once I became admin I thought: "Game over! I'm in! I just have to find the flag!".
+                        Well, those were my famous last words before the disaster... It's not exactly that simple. 
+                        So I rolled up my sleeves and kept looking until I thought: "What if I put <code>admin</code> as username and <code>1</code> as user_id?".
+                        I did that and got into the real administrator account. I could do many things, including entering the admin profile, where I noticed a quite strange field in the request:
+                    </p>
+<pre><code>POST /admin/profile HTTP/1.1
+Host: challenge-1125.intigriti.io
+[...]
+Cookie: token=eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYzNTQ1MzI0fQ.
+display_name=ss</code></pre>
+                    <p>
+                        After a few failed attempts and tests, I managed to find the <strong>RCE</strong> (Remote Code Execution) that allowed sending commands to the operating system, and it is precisely through this that I found the flag which allowed me to complete the CTF.
+                    </p>
+                    <p>
+                        But now you are surely asking yourselves "how?". It's very simple in the end: I tried to see what would happen if I wrote <code>{{7*7}}</code> and the site answered <strong>49</strong>. 
+                        So I can say I found an <strong>SSTI (Server-Side Template Injection)</strong> vulnerability inside this field.
+                    </p>
+                    <blockquote>
+                        <strong>For those who don't know what an SSTI is:</strong><br>
+                        In simple terms, it happens when a website takes what you write and brutally inserts it into the page code (the template) without checking. 
+                        It's as if in a form you wrote a math operation and the person reading the form, instead of reading the numbers, did the calculation. 
+                        Only here, instead of calculations, you can make it execute server commands!
+                    </blockquote>
+                    <p>
+                        Without further ado, I found a payload that imported <code>os</code> in Python and used it:
+                    </p>
+<pre><code>POST /admin/profile HTTP/1.1
+Host: challenge-1125.intigriti.io
+[...]
+Cookie: token=eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYzNTQ1MzI0fQ.
+display_name={{ self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}</code></pre>
+                    <p>
+                        Sending this POST, the output of the <code>id</code> command appeared inside that field, showing the user I was logged in as inside the operating system. 
+                        Now only the flag is missing, which I leave for you to find for fun.
+                    </p>
+                    <p>
+                        I write this write-up to be helpful and inspiring to those who, like me, are having trouble finding their first bug.
+                    </p>
+                    <a href="https://medium.com/@msfire/intigriti-challenge-1125-from-jwt-bypass-to-rce-via-ssti-e72aed2424d9?postPublishedType=initial" target="_blank" style="color: #fff; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: color 0.3s;">
+                        <i class='bx bxl-medium' style="font-size: 1.4rem;"></i> Read the full Write-up on Medium <i class='bx bx-right-arrow-alt'></i>
+                    </a>
+                    <p style="margin-top: 2rem; font-style: italic;">Happy Hacking! 🚩</p>
+                </div>
+            </article>
+
+
+            <article class="classic-post">
+                <div class="post-meta">
+                    <span class="post-date">19-11-2025</span>
+                    <span class="post-category text-warning">[ DEV / SECURITY ]</span>
+                </div>
+                <h2 class="post-title">Automating the Hunt: My Linux PrivEsc Checker</h2>
+                
+                <div class="post-content">
+                    <p>
+                        During labs and pentest sessions, I realized how much time I waste typing the same basic enumeration commands once I get a shell.
+                        Of course, there are incredibly powerful and complete industry-standard tools (like LinPEAS) that are essential for our work. However, there is a big difference between running an automated tool and building one from scratch.
+                    </p>
+                    <p>
+                        I decided to create a **Bash** script that focuses precisely on four critical vectors: **SUID**, **Capabilities**, **NFS**, and **Cron Jobs**. Here is how I built it and the logic behind each check.
+                    </p>
+
+                    <div style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+                        <img src="./images/privesc.png" alt="Script Demo Output" style="opacity: 0.9;"> 
+                        <p style="font-size: 0.8rem; text-align: center; padding: 10px; color: #64748b; background: rgba(0,0,0,0.3);">
+                            <em>Output</em>
+                        </p>
+                    </div>
+
+                    <h3>1. SUID: The Regex Optimization</h3>
+                    <p>
+                        The **Set User ID (SUID)** bit is a standard Unix feature that allows a file to run with its owner's permissions. The danger arises when binaries that allow command execution (like `find`, `vim`, or `cp`) have this bit enabled.
+                    </p>
+                    <p>
+                        The classic approach to find them is using `find / -perm -4000`. However, this returns many legitimate results that create "noise". For my script, I implemented a **dynamic Allowlist** system.
+                    </p>
+
+<pre><code># Array of binaries known to allow Privilege Escalation (GTFOBins)
+readonly -a binari_sospetti=(
+    "nmap" "vim" "find" "bash" "base64" ... 
+)
+
+suid() {
+    # Dynamic construction of an optimized Regex: (nmap|vim|find|...)
+    local regex_pattern=$(printf "%s|" "${binari_sospetti[@]}")
+    regex_pattern="(${regex_pattern%|})$" 
+
+    # Search only for SUID files that match our target list
+    find / -type f -perm -4000 2>/dev/null | grep -E "$regex_pattern"
+}</code></pre>
+                    <p>
+                        This technique drastically reduces execution time and output, showing me only the binaries I can actually exploit to escalate privileges.
+                    </p>
+
+                    <h3>2. Capabilities: Root split into pieces</h3>
+                    <p>
+                        **Linux Capabilities** break down root privileges into distinct units. A binary might not be SUID, but it could have `cap_setuid`, which still allows it to impersonate other users.
+                    </p>
+                    <p>
+                        The script uses `getcap -r /` to scan the filesystem. The engineering challenge here is filtering false positives: many system services use legitimate capabilities. I had to create an **Ignore List** to exclude standard processes, highlighting critical capabilities like `cap_dac_read_search` (bypassing read permissions) instead.
+                    </p>
+
+                    <h3>3. Weaponizing Cron Jobs</h3>
+                    <p>
+                        Scheduled tasks (Cron) are a classic vector. If root runs a script every 5 minutes, and I can modify that script, then I can execute code as root.
+                    </p>
+                    <p>
+                        The complexity lies in parsing the `/etc/crontab` file. Bash is not designed for advanced parsing, so I had to write logic that:
+                    </p>
+                    <ol>
+                        <li>Reads the crontab ignoring comments.</li>
+                        <li>Extracts absolute paths from commands (e.g., `/usr/local/bin/backup.sh`).</li>
+                        <li>Checks if the current user has write permissions (`-w`) on those files.</li>
+                    </ol>
+
+<pre><code># Permission check logic (Simplified)
+echo "$paths" | while IFS= read -r path; do
+    if [ -w "$path" ]; then
+        echo "[!] VULNERABLE: $USER can modify $path (executed by root)"
+    fi
+done</code></pre>
+
+                    <h3>Conclusion</h3>
+                    <p>
+                        Creating this tool allowed me to speed up my workflow, but most importantly, to master the internal Linux mechanisms that we often take for granted.
+                        There is nothing better than getting a root shell thanks to a tool you wrote yourself.
+                    </p>
+                    
+                    <p style="margin-top: 2rem; border-left: 3px solid #00abf0; padding-left: 15px;">
+                        <strong>Source Code:</strong><br>
+                        <a href="https://github.com/MS-0x404/Linux-PrivEsc-Checker" target="_blank" style="color: #00abf0; text-decoration: underline; font-weight: 600;">
+                             github.com/MS-0x404/Linux-PrivEsc-Checker <i class='bx bx-link-external'></i>
+                        </a>
+                    </p>
+                </div>
+            </article>
+
+            <article class="classic-post">
+                <div class="post-meta">
+                    <span class="post-date">20-06-2025</span>
+                    <span class="post-category text-warning">[ DEV / SECURITY ]</span>
+                </div>
+                <h2 class="post-title">MS-AV: Writing a Linux Antivirus from Scratch</h2>
+                
+                <div class="post-content">
+                    <p>
+                        They often say that to know how to attack, you must know how to defend. So, before diving into advanced Red Teaming, I set myself a seemingly crazy challenge as my final project for <strong>Istituto InfoBasic</strong>: writing a fully functional Antivirus entirely in Bash.
+                    </p>
+                    <p>
+                        The result is <strong>MS-AV</strong>. It is not just a simple wrapper for existing tools, but a scanning engine that I had to optimize heavily. Writing an AV in a scripting language brings a huge problem: performance.
+                    </p>
+
+                     <div style="margin-bottom: 2rem; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); background: #000;">
+                        <video controls style="width: 100%; display: block;">
+                            <source src="./videos/demoprg.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+
+                    <h3>1. The "Engine": Optimization is Everything</h3>
+                    <p>
+                        Bash was not born for intensive calculations. If you try to calculate the hash of 100,000 files in a poorly written `for` loop, the CPU explodes due to process overhead.
+                        I had to optimize the scanning loop by minimizing system calls (syscalls). Instead of using useless `cat` or pipes, I pass the file directly to <code>openssl</code> and clean the output with <code>awk</code> in a single stream.
+                    </p>
+                    <p>
+                        Furthermore, I implemented a **smart exclusion** system directly in the `find` command. The script automatically ignores virtual directories like `/proc`, `/sys`, or `/dev` to avoid infinite loops or critical false positives.
+                    </p>
+
+                    <h3>2. MD5 vs SHA256: The Collision Problem</h3>
+                    <p>
+                        Most amateur scripts stop at MD5 because it is fast. However, cryptographically speaking, **MD5 is broken**. It is vulnerable to collision attacks, which would allow sophisticated malware to disguise itself.
+                        For this reason, MS-AV implements a real-time **Dual-Hashing** engine:
+                    </p>
+
+<pre><code># Extract from the core scanning loop
+# MD5 for speed (legacy ClamAV compatibility)
+scan_md5=$(openssl dgst -md5 "$file" 2>/dev/null | awk '{print $2}') 
+# SHA256 for security (Abuse.ch integration)
+scan_sha256=$(openssl dgst -sha256 "$file" 2>/dev/null | awk '{print $2}')
+
+# ...comparison logic with in-memory databases follows...</code></pre>
+
+                    <h3>3. "Poor Man's" Heuristics & Secure Deletion</h3>
+                    <p>
+                        Signatures are useless against 0-day threats. I wrote a heuristic function based on Regex that intercepts "noisy" patterns in filenames (e.g., <em>payload, rat, keygen</em>) that escape the hash check.
+                    </p>
+                    <p>
+                        But the most important detail is **secure deletion**. When a file is confirmed infected and moved to quarantine, if the user decides to delete it, I don't use a simple `rm`. I use <code>shred</code> to overwrite the physical blocks on the disk, preventing the malware from being recovered via forensic data recovery tools.
+                    </p>
+<pre><code>function clean_malware() {
+    if [[ $(ls -A $DIRECTORY_QUARANTENA) ]]; then ## If files are in quarantine, delete them 
+        shred -u $DIRECTORY_QUARANTENA/*
+        echo ""
+        echo "=== Threats Removed ==="
+        echo ""
+    else
+        echo ""
+        echo "=== No Malware Found! ==="
+        echo ""
+    fi
+}
+</code></pre>
+
+                    <h3>4. Automation and Structured Reporting</h3>
+                    <p>
+                        An Antivirus must run in the background. Instead of relying on external scripts, I wrote a function that allows MS-AV to "install itself" into the <code>crontab</code>. The <code>auto</code> function generates a dedicated worker script (`av-auto`) that handles daily updates via <code>freshclam</code> and `curl`, and performs scheduled scans without user intervention.
+                    </p>
+                    <p>
+                         Also, I wanted to make the output professional. Manually building valid JSON in Bash is tedious, but necessary to integrate logs into external SIEM systems.
+                    </p>
+<pre><code># Manual JSON log construction in Bash
+log_json="{\"timestamp\": \"$timestamp\", \"scan_id\": \"$scan_id\", \
+\"hostname\": \"$HOSTNAME\", \"scan_path\": \"$DIRECTORY_DA_SCANSIONARE\", \
+\"esclusioni\": \"$ESCLUSIONI_ESTENSIONI\", \
+\"malware_trovati\": $malware_count, \"file_scansionati\": $count, \
+\"scan_status\": \"$scan_status\"}"
+
+echo "$log_json" >> "$LOG_JSON_FILE"</code></pre>
+
+
+
+                    <p style="margin-top: 2rem; border-left: 3px solid #f59e0b; padding-left: 15px;">
+                        <strong>Source Code:</strong><br>
+                        <a href="https://github.com/MS-0x404/ms-av" target="_blank" style="color: #f59e0b; text-decoration: underline; font-weight: 600;">
+                             github.com/MS-0x404/ms-av <i class='bx bx-link-external'></i>
+                        </a>
+                    </p>
+                </div>
+            </article>
+
+            
+
+
+
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
