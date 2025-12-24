@@ -104,6 +104,73 @@
 
             <article class="classic-post">
                 <div class="post-meta">
+                    <span class="post-date">23-12-2025</span>
+                    <span class="post-category text-warning">[ DEV / SECURITY ]</span>
+                </div>
+                <h2 class="post-title">Deceive & Detect: Building a Custom Python Honeypot</h2>
+                
+                <div class="post-content">
+                    <p>
+                        As Red Teamers, we love popping shells, but do we truly understand what happens on the other side? 
+                        To bridge the gap between attacking and defending, I decided to build a **Low-Interaction Honeypot** from scratch.
+                    </p>
+                    <p>
+                        The goal was simple: expose a vulnerable-looking Telnet service to the internet and analyze who (or what) came knocking. 
+                        Here is how I engineered the trap and what I caught in the wild.
+                    </p>
+
+                    <div style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+                        <img src="./images/honeypot.png" alt="Honeypot Terminal Banner" style="opacity: 0.9;"> 
+                        <p style="font-size: 0.8rem; text-align: center; padding: 10px; color: #64748b; background: rgba(0,0,0,0.3);">
+                            <em>The fake login prompt waiting for connections</em>
+                        </p>
+                    </div>
+
+                    <h3>1. The Architecture: Isolating the Threat</h3>
+                    <p>
+                        Security rule #1: Never run malware on your host machine. 
+                        I containerized the entire application using **Docker**. The Python script binds to port `2323` inside the container, 
+                        which is then mapped to port `23` (Telnet) on the host. This ensures that if a bot manages to escape the script, 
+                        it is still trapped inside a minimal Linux environment.
+                    </p>
+
+                    <h3>2. Bot vs Human: Keystroke Dynamics</h3>
+                    <p>
+                        This is the feature I'm most proud of. How do you distinguish a script from a human attacker? **Latency.**
+                        Automated brute-force tools send credentials instantly. Humans hesitate.
+                        I implemented a timing check between the login prompt and the password submission:
+                    </p>
+
+<pre><code># Simplified logic from main.py
+start_time = time.time()
+client.recv(1024) # Wait for input
+end_time = time.time()
+
+delta = end_time - start_time
+
+if delta <= 0.2:
+    logger.warning("Probable BOT")
+else:
+    logger.warning("Manual Attack?")</code></pre>
+
+                    <h3>3. Real-Time Threat Intelligence</h3>
+                    <p>
+                        Logging an IP address isn't enough. I integrated an external API (vpnapi.io) to analyze every incoming connection in real-time.
+                        Before the attacker even finishes typing their password, the system already knows if they are using a **VPN**, a **Tor Node**, or a **Proxy**.
+                    </p>
+
+
+                    <p style="margin-top: 2rem; border-left: 3px solid #00abf0; padding-left: 15px;">
+                        <strong>Source Code:</strong><br>
+                        <a href="https://github.com/MS-0x404/Honeypot" target="_blank" style="color: #00abf0; text-decoration: underline; font-weight: 600;">
+                             github.com/MS-0x404/Honeypot <i class='bx bx-link-external'></i>
+                        </a>
+                    </p>
+                </div>
+            </article>
+
+            <article class="classic-post">
+                <div class="post-meta">
                     <span class="post-date">25-11-2025</span>
                     <span class="post-category">[ WRITE-UP ]</span>
                 </div>
